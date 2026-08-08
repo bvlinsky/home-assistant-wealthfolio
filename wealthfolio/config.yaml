@@ -1,0 +1,26 @@
+name: "Wealthfolio"
+slug: "wealthfolio"
+description: "Grow Wealth. Keep Control."
+version: "3.6.3"
+image: wealthfolio/wealthfolio
+ports:
+  8088/tcp: 8088
+webui:
+  port: http://[HOST]:[PORT:8088]
+init: false
+legacy: true
+arch:
+  - aarch64
+  - amd64
+map:
+  - type: homeassistant_config
+    path: /configdata
+    read_only: false
+options:
+  WF_SECRET_KEY: ""
+  WF_DB_PATH: /configdata/wealthfolio/app.db
+  WF_AUTH_REQUIRED: false
+schema:
+  WF_SECRET_KEY: str
+  WF_DB_PATH: str
+  WF_AUTH_REQUIRED: bool
