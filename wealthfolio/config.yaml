@@ -5,8 +5,7 @@ version: "3.6.3"
 image: wealthfolio/wealthfolio
 ports:
   8088/tcp: 8088
-webui:
-  port: http://[HOST]:[PORT:8088]
+webui: http://[HOST]:[PORT:8088]
 init: false
 legacy: true
 arch:
