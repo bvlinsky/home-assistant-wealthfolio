@@ -1,0 +1,48 @@
+name: Check and bump image version
+
+on:
+  schedule:
+    - cron: '0 17 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Fetch latest release and update config
+        id: check_update
+        run: |
+          set -euo pipefail
+
+          CURRENT_VERSION=$(yq '.version' wealthfolio/config.yaml)
+          LATEST_VERSION=$(curl -sL --fail -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/wealthfolio/wealthfolio/releases/latest" \
+            | jq -r '.tag_name | ltrimstr("v")')
+
+          echo "Current: $CURRENT_VERSION"
+          echo "Latest:  $LATEST_VERSION"
+
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+            yq -i ".version = \"$LATEST_VERSION\"" wealthfolio/config.yaml
+            echo "Updated: $CURRENT_VERSION → $LATEST_VERSION"
+          else
+            echo "Already up to date."
+          fi
+
+          echo "commit_message=chore: update wealthfolio image to $LATEST_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          branch: main
+          commit_message: ${{ steps.check_update.outputs.commit_message }}
+          file_pattern: wealthfolio/config.yaml
