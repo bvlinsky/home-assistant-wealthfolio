@@ -2,7 +2,7 @@ name: Check and bump image version
 
 on:
   schedule:
-    - cron: '0 17 * * *'
+    - cron: '0 4 * * *'
   workflow_dispatch:
 
 permissions:
@@ -38,11 +38,22 @@ jobs:
             echo "Already up to date."
           fi
 
-          echo "commit_message=chore: update wealthfolio image to $LATEST_VERSION" >> $GITHUB_OUTPUT
+          echo "commit_message=chore: update wealthfolio image to $LATEST_VERSION" >> "$GITHUB_OUTPUT"
+          echo "latest_version=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Commit and push if changed
+        id: auto_commit
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           branch: main
           commit_message: ${{ steps.check_update.outputs.commit_message }}
           file_pattern: wealthfolio/config.yaml
+          tag_name: ${{ steps.check_update.outputs.latest_version }}
+
+      - name: Create GitHub Release
+        if: steps.auto_commit.outputs.changes_detected == 'true'
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.check_update.outputs.latest_version }}
+          name: ${{ steps.check_update.outputs.latest_version }}
+          generate_release_notes: true
