@@ -1,7 +1,7 @@
 name: "Wealthfolio"
 slug: "wealthfolio"
 description: "Grow Wealth. Keep Control."
-version: "3.6.3"
+version: "3.7.0"
 image: wealthfolio/wealthfolio
 ports:
   8088/tcp: 8088
