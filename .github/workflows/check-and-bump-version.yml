@@ -38,7 +38,7 @@ jobs:
             echo "Already up to date."
           fi
 
-          echo "commit_message=chore: update wealthfolio image to $LATEST_VERSION" >> "$GITHUB_OUTPUT"
+          echo "commit_message=chore: updated wealthfolio version to $LATEST_VERSION" >> "$GITHUB_OUTPUT"
           echo "latest_version=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Commit and push if changed
@@ -56,4 +56,4 @@ jobs:
         with:
           tag_name: ${{ steps.check_update.outputs.latest_version }}
           name: ${{ steps.check_update.outputs.latest_version }}
-          generate_release_notes: true
+          body: Updated wealthfolio version to ${{ steps.check_update.outputs.latest_version }}
