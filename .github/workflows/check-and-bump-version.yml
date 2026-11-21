@@ -21,11 +21,15 @@ jobs:
 
       - name: Fetch latest release and update config
         id: check_update
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
           CURRENT_VERSION=$(yq '.version' wealthfolio/config.yaml)
-          LATEST_VERSION=$(curl -sL --fail -H "Accept: application/vnd.github+json" \
+          LATEST_VERSION=$(curl -sL --fail \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
             "https://api.github.com/repos/wealthfolio/wealthfolio/releases/latest" \
             | jq -r '.tag_name | ltrimstr("v")')
 
