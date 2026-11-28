@@ -43,3 +43,13 @@ For documentation about Wealthfolio itself (features, usage, self-hosting guides
 Contributions from all sources are welcome, including AI-assisted and automated contributions. If something feels off or could be better, open a short issue or submit a pull request.
 
 See `CONTRIBUTING.md` and `AI_CONTRIBUTING.md` for contribution notes.
+
+## ⭐️ Star History
+
+<a href="https://www.star-history.com/?repos=bvlinsky%2Fhome-assistant-wealthfolio&type=date&releases=&legend=bottom-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=bvlinsky/home-assistant-wealthfolio&type=date&theme=dark&legend=bottom-right" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=bvlinsky/home-assistant-wealthfolio&type=date&legend=bottom-right" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=bvlinsky/home-assistant-wealthfolio&type=date&legend=bottom-right" />
+ </picture>
+</a>
